@@ -1,0 +1,9 @@
+# model/save_model.py
+import joblib
+from sklearn.ensemble import RandomForestClassifier
+
+model = RandomForestClassifier()
+# Assume X_train and y_train are ready
+model.fit(X_train, y_train)
+
+joblib.dump(model, 'model/your_model.pkl')
