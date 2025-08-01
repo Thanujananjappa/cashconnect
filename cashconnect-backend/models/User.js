@@ -19,7 +19,11 @@ const userSchema = new mongoose.Schema({
     latitude: { type: Number },
     longitude: { type: Number },
     city: { type: String },
-    state: { type: String }
+    state: { type: String },
+    coordinates: {
+      type: [Number], // [longitude, latitude]
+      index: '2dsphere',
+    }
   },
 
   // Matching preferences

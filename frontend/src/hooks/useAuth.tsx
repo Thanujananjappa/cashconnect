@@ -1,5 +1,3 @@
-// src/hooks/useAuth.tsx
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, AuthState } from '../types';
 
@@ -10,46 +8,20 @@ interface AuthContextType extends AuthState {
   signUp: (email: string, password: string, userData: Partial<User>) => Promise<void>;
   signOut: () => void;
   refreshUser: () => void;
+  token: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-    setLoading(false);
+    refreshUser();
   }, []);
-
-  const signUp = async (
-    email: string,
-    password: string,
-    userData: Partial<User>
-  ) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`${API_URL}/signup`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, ...userData }),
-      });
-
-      if (!res.ok) throw new Error('Signup failed');
-    } catch (err) {
-      console.error(err);
-      setError('Sign up failed');
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const signIn = async (email: string, password: string) => {
     setLoading(true);
@@ -61,15 +33,51 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         body: JSON.stringify({ email, password }),
       });
 
-      if (!res.ok) throw new Error('Login failed');
-      const data: User = await res.json();
+      const data = await res.json();
 
-      localStorage.setItem('user', JSON.stringify(data));
-      setUser(data);
+      if (!res.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      const { user, token } = data;
+      if (user && token) {
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', token);
+        setUser(user);
+        setToken(token);
+      } else {
+        throw new Error('Invalid response from server');
+      }
     } catch (err) {
       console.error(err);
       setError('Sign in failed');
       setUser(null);
+      setToken(null);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const signUp = async (email: string, password: string, userData: Partial<User>) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API_URL}/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, ...userData }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'Signup failed');
+      }
+
+      await signIn(email, password);
+    } catch (err) {
+      console.error(err);
+      setError('Sign up failed');
       throw err;
     } finally {
       setLoading(false);
@@ -78,27 +86,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     setUser(null);
+    setToken(null);
   };
 
   const refreshUser = () => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    try {
+      const savedUser = localStorage.getItem('user');
+      const savedToken = localStorage.getItem('token');
+
+      if (savedUser && savedUser !== 'undefined') {
+        setUser(JSON.parse(savedUser));
+      } else {
+        setUser(null);
+      }
+
+      if (savedToken && savedToken !== 'undefined') {
+        setToken(savedToken);
+      } else {
+        setToken(null);
+      }
+    } catch (err) {
+      console.error('Failed to refresh user:', err);
+      setUser(null);
+      setToken(null);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        loading,
-        error,
-        signIn,
-        signUp,
-        signOut,
-        refreshUser
-      }}
+      value={{ user, token, loading, error, signIn, signUp, signOut, refreshUser }}
     >
       {children}
     </AuthContext.Provider>

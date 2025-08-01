@@ -1,12 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const loanController = require('../controllers/loanController');
+const {
+  createLoan,
+  getMatchedLoans,
+  acceptLoanRequest,
+  getLoanStatusForBorrower,
+  getLoanStatusByLoanId,
+  getNotifications,
+  getCounterpartyLocation,
+   confirmExchange
+} = require('../controllers/loanController');
 
-router.post('/', loanController.createLoan);
-router.get('/matches', loanController.getMatchedLoans);
-router.patch('/accept', loanController.acceptLoanRequest);
-router.get('/notifications', loanController.getNotifications);
-router.get('/status/:borrowerId', loanController.getLoanStatusForBorrower);
-router.get('/matches', loanController.getMatchedLoans);
-
+// 🚫 No authMiddleware
+router.post('/create', createLoan);
+router.get('/match', getMatchedLoans);
+router.patch('/accept', acceptLoanRequest);
+router.get('/status/:borrowerId', getLoanStatusForBorrower);
+router.get('/loan-status/:loanId', getLoanStatusByLoanId);
+router.get('/notifications', getNotifications);
+router.get('/:loanId/location', getCounterpartyLocation);
+router.post('/confirm-exchange', confirmExchange); 
 module.exports = router;

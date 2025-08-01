@@ -4,12 +4,14 @@ const loanSchema = new mongoose.Schema(
   {
     amount: { type: Number, required: true },
     finalAmount: { type: Number, required: true },
+    charges: { type: Number, required: true },
     purpose: { type: String, default: 'Cash Request' },
     term: { type: Number, default: 1 },
-    maxRate: { type: Number, default: 0 },
-    description: { type: String, required: false, default: '' },
-    notes: { type: String },
-    borrower: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    borrower: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     lender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
     status: {
       type: String,
@@ -20,15 +22,17 @@ const loanSchema = new mongoose.Schema(
       type: {
         type: String,
         enum: ['Point'],
-        default: 'Point',
         required: true,
+        default: 'Point'
       },
       coordinates: {
         type: [Number],
         required: true,
-        validate: v => Array.isArray(v) && v.length === 2,
+        validate: (v) => Array.isArray(v) && v.length === 2
       },
     },
+    lenderConfirmed: { type: Boolean, default: false },
+    borrowerConfirmed: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
@@ -36,4 +40,3 @@ const loanSchema = new mongoose.Schema(
 loanSchema.index({ location: '2dsphere' });
 
 module.exports = mongoose.model('Loan', loanSchema);
-

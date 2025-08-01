@@ -1,4 +1,4 @@
-// ✅ App.tsx (Fully Updated)
+// src/App.tsx
 import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
@@ -10,20 +10,22 @@ import {
 
 import { useAuth } from './hooks/useAuth';
 import { LoginForm } from './components/Auth/LoginForm';
-import { SignupForm } from './components/Auth/SignupForm';
+import SignupForm from './components/Auth/SignupForm';
 import { Header } from './components/Layout/Header';
 import { Sidebar } from './components/Layout/Sidebar';
 import { Dashboard } from './components/Dashboard/Dashboard';
 import { BorrowerDashboard } from './components/Dashboard/BorrowDashboard';
 import { LenderDashboard } from './components/Dashboard/LenderDashboard';
+import BorrowForm from './components/Borrow/BorrowForm';
 
-// ✅ Pages
+// Pages
 import { ProfilePage } from './components/Pages/ProfilePage';
 import { SettingsPage } from './components/Pages/SettingPage';
 import { LendingStats } from './components/Pages/LendingStats';
 import { NotificationsPage } from './components/Pages/NotificationPage';
 import { HelpPage } from './components/Pages/HelpPage';
-import { LiveTrackingPage } from './components/Pages/LiveTrackingPage';
+import LiveTrackingPage from './components/Pages/LiveTrackingPage';
+import  MoneyExchangePage  from './components/Pages/MoneyExchangePage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
@@ -52,27 +54,18 @@ function MainApp() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const path = location.pathname;
-  const activeTab = path.includes('/borrow')
-    ? 'borrow'
-    : path.includes('/lend')
-    ? 'lend'
-    : path.includes('/profile')
-    ? 'profile'
-    : path.includes('/settings')
-    ? 'settings'
-    : path.includes('/loan-history')
-    ? 'loan-history'
-    : path.includes('/improve-score')
-    ? 'improve-score'
-    : path.includes('/lending-stats')
-    ? 'lending-stats'
-    : path.includes('/notifications')
-    ? 'notifications'
-    : path.includes('/help')
-    ? 'help'
-    : path.includes('/language')
-    ? 'language'
-    : 'dashboard';
+  const activeTab =
+    path.includes('/borrow') ? 'borrow' :
+    path.includes('/lend') ? 'lend' :
+    path.includes('/profile') ? 'profile' :
+    path.includes('/settings') ? 'settings' :
+    path.includes('/loan-history') ? 'loan-history' :
+    path.includes('/improve-score') ? 'improve-score' :
+    path.includes('/lending-stats') ? 'lending-stats' :
+    path.includes('/notifications') ? 'notifications' :
+    path.includes('/help') ? 'help' :
+    path.includes('/live-tracking') ? 'live-tracking' :
+    'dashboard';
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -91,12 +84,15 @@ function MainApp() {
             <Route path="" element={<Dashboard />} />
             <Route path="borrow" element={<BorrowerDashboard />} />
             <Route path="lend" element={<LenderDashboard />} />
-            <Route path="live-map" element={<LiveTrackingPage />} />
+            <Route path="live-tracking" element={<LiveTrackingPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="settings" element={<SettingsPage />} />
             <Route path="lending-stats" element={<LendingStats />} />
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="help" element={<HelpPage />} />
+            <Route path="money-exchange" element={<MoneyExchangePage />} />
+
+            <Route path="borrowform" element={<BorrowForm />} />
           </Routes>
         </main>
       </div>

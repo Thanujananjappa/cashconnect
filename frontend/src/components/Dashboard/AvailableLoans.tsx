@@ -12,8 +12,12 @@ export const AvailableLoans: React.FC = () => {
   useEffect(() => {
     const fetchLoans = async () => {
       try {
-        const response = await axios.get('/api/loans/matched');
-        setLoans(response.data);
+const response = await axios.get('/api/loans/matches', {
+  params: {
+    latitude: user.location.latitude,
+    longitude: user.location.longitude,
+  },
+});        setLoans(response.data);
       } catch (err: any) {
         setError('❌ Failed to fetch loans.');
       }
