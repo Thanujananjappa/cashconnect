@@ -114,46 +114,41 @@ MONGO_URI=your_mongodb_connection_string
 LOCATIONIQ_API_KEY=your_locationiq_key
 FRONTEND_URL=http://localhost:5173
 ```
-
+---
 ###📱 Usage
-##Borrower Flow
+
+Borrower Flow
 
 Sign up as a borrower
-
 Submit loan request (with amount, term, purpose)
-
 System auto-calculates processing charges
-
 View live updates when a lender accepts your request
 
-##Lender Flow
+Lender Flow
 
 Sign up as a lender
-
 See loan requests nearby
-
 Accept any one request (first-come-first-serve logic)
-
 After accepting, access live location of borrower
-
+---
 ##Live Map
 
 Integrated Leaflet map displays real-time tracking of borrower/lender
-
+---
 ###📝 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-
+---
 ###👥 Author
 Thanuja Nanjappa – Developer & Maintainer
-
+---
 ###🙏 Acknowledgments
 LocationIQ for reverse geocoding
 
 Open source contributors of Haversine and Leaflet.js
 
 MongoDB + Vite + Tailwind community
-
+---
 ###📚 API Documentation
 📌 Create Loan Request
 ```h
@@ -217,6 +212,7 @@ Content-Type: application/json
 
 GET /api/loans/live-location?loanId=abc123
 ```
+---
 📎 Folder Structure
 ```css
 
@@ -233,7 +229,6 @@ cashconnect/
 │   └── utils/
 └── screenshots/
 ```
+---
 
 
-
-Ask ChatGPT
