@@ -114,48 +114,62 @@ MONGO_URI=your_mongodb_connection_string
 LOCATIONIQ_API_KEY=your_locationiq_key
 FRONTEND_URL=http://localhost:5173
 ```
----
-###📱 Usage
+### 📱 Usage
 
-Borrower Flow
+#### **Borrower Flow**
 
-Sign up as a borrower
-Submit loan request (with amount, term, purpose)
-System auto-calculates processing charges
-View live updates when a lender accepts your request
+- Sign up as a borrower  
+- Submit loan request (with amount, term, purpose)  
+- System auto-calculates processing charges  
+- View live updates when a lender accepts your request  
 
-Lender Flow
+#### **Lender Flow**
 
-Sign up as a lender
-See loan requests nearby
-Accept any one request (first-come-first-serve logic)
-After accepting, access live location of borrower
----
-##Live Map
-
-Integrated Leaflet map displays real-time tracking of borrower/lender
----
-###📝 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- Sign up as a lender  
+- See loan requests nearby  
+- Accept any one request (first-come-first-serve logic)  
+- After accepting, access live location of borrower  
 
 ---
-###👥 Author
-Thanuja Nanjappa – Developer & Maintainer
+
+## 🗺️ Live Map
+
+Integrated Leaflet map displays real-time tracking of borrower/lender after loan acceptance.
+
 ---
-###🙏 Acknowledgments
-LocationIQ for reverse geocoding
 
-Open source contributors of Haversine and Leaflet.js
+### 📝 License
 
-MongoDB + Vite + Tailwind community
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
+
 ---
-###📚 API Documentation
-📌 Create Loan Request
-```h
 
+### 👥 Author
+
+**Thanuja Nanjappa** – Developer & Maintainer
+
+---
+
+### 🙏 Acknowledgments
+
+- LocationIQ for reverse geocoding  
+- Open source contributors of Haversine and Leaflet.js  
+- MongoDB + Vite + Tailwind community  
+
+---
+
+### 📚 API Documentation
+
+#### 📌 Create Loan Request
+
+```http
 POST /api/loans
 Content-Type: application/json
+```
 
+**Request Body:**
+
+```json
 {
   "amount": 5000,
   "term": "6 months",
@@ -166,10 +180,10 @@ Content-Type: application/json
   }
 }
 ```
-Response:
+
+**Response:**
 
 ```json
-
 {
   "message": "Loan created successfully",
   "loan": {
@@ -178,15 +192,18 @@ Response:
   }
 }
 ```
-📌 Get Nearby Lenders (for borrower)
-```h
 
+---
+
+#### 📌 Get Nearby Lenders (for borrower)
+
+```http
 GET /api/loans/matches?userId=USER_ID
 ```
-Response:
+
+**Response:**
 
 ```json
-
 [
   {
     "lenderId": "1234",
@@ -195,27 +212,38 @@ Response:
   }
 ]
 ```
-📌 Accept Loan Request (by lender)
-```h
 
+---
+
+#### 📌 Accept Loan Request (by lender)
+
+```http
 POST /api/loans/accept
-```
 Content-Type: application/json
+```
+
+**Request Body:**
+
 ```json
 {
   "loanId": "abc123",
   "lenderId": "lender_user_id"
 }
 ```
-📌 Get Live Tracking Info
-```h
 
+---
+
+#### 📌 Get Live Tracking Info
+
+```http
 GET /api/loans/live-location?loanId=abc123
 ```
----
-📎 Folder Structure
-```css
 
+---
+
+### 📎 Folder Structure
+
+```bash
 cashconnect/
 ├── frontend/
 │   └── src/
@@ -229,6 +257,3 @@ cashconnect/
 │   └── utils/
 └── screenshots/
 ```
----
-
-
