@@ -12,30 +12,37 @@ A real-time loan matchmaking platform that connects **borrowers** and **lenders*
 
 ## 📸 Screenshots
 
-### Borrower Dashboard
+### 🏠 Dashboard (All Features)
+![Dashboard](./screenshots/dashboard.jpg)
 
-![Borrower Dashboard](./screenshots/borrower-dashboard.png)  
-See nearby lenders and request a loan
+### 👤 Borrower Dashboard
+![Borrower Dashboard](./screenshots/borrowerdash.jpg)
 
-### Lender Dashboard
+### 📝 Loan Request Form
+![Borrow Form](./screenshots/borrowform.jpg)
 
-![Lender Dashboard](./screenshots/lender-dashboard.png)  
-View pending loan requests and accept
+### 📌 After Reaching Destination (Completion Page)
+![Completion](./screenshots/completion.jpg)
 
-### Loan Request Form
+### 💰 Lender Dashboard
+![Lender Dashboard](./screenshots/lenderdash.jpg)
 
-![Loan Form](./screenshots/loan-form.png)  
-Submit loan request with calculated charges
+### 📍 Lender Location Tracking
+![Lender Location](./screenshots/lenderloc.jpg)
 
-### Live Tracking
+### 🗺️ Live Location Map
+![Live Location](./screenshots/location.jpg)
 
-![Live Map](./screenshots/live-tracking.png)  
-Track real-time location of borrower/lender
+### 🔐 Login Page
+![Login](./screenshots/login.jpg)
 
-> Make sure you place all screenshots in a `screenshots` folder in your root directory.
+### 🔒 OTP Verification Screens
+![OTP](./screenshots/otp.jpg)
+![OTP Step 2](./screenshots/otp2.jpg)
 
+### 🧾 Signup Page
+![Signup](./screenshots/signup.jpg)
 ---
-
 ## 🌟 Features
 
 * 🔐 **User Authentication** – Register/login as borrower or lender
