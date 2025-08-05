@@ -1,124 +1,239 @@
+# 💸 CashConnect – Peer-to-Peer Lending Platform
 
- 💸 CashConnect
+A real-time loan matchmaking platform that connects **borrowers** and **lenders** based on **geolocation**, **loan requirements**, and **matching logic**. The system includes borrower/lender dashboards, request management, and live location tracking after loan acceptance.
 
-CashConnect is a peer-to-peer (P2P) lending platform that connects borrowers and lenders based on location, loan terms, and matching logic. Built using the MERN stack (MongoDB, Express, React, Node.js), it features real-time loan matching, borrower-lender dashboards, live location tracking, and secure loan request flows.
+---
+
+## 🌐 Deployment URLs
+
+* Frontend: (https://cashconnect-cnkd-7wlx13nqp-thanujananjappas-projects.vercel.app)
+* Backend: render
+---
 
 ## 📸 Screenshots
 
-> Place your screenshots inside a `/screenshots` folder in the root directory. Example images:
+### Borrower Dashboard
 
-| Dashboard View | Live Tracking | Loan Request Form |
-|----------------|---------------|-------------------|
-| ![Dashboard](./screenshots/dashboard.png) | ![Live](./screenshots/live-tracking.png) | ![Form](./screenshots/loan-form.png) |
+![Borrower Dashboard](./screenshots/borrower-dashboard.png)  
+See nearby lenders and request a loan
 
----
+### Lender Dashboard
 
-## 🚀 Features
+![Lender Dashboard](./screenshots/lender-dashboard.png)  
+View pending loan requests and accept
 
-- 🔐 User authentication (borrowers and lenders)
-- 📍 Geolocation-based matching using Haversine formula
-- 🧠 ML-inspired logic for nearest lender recommendations
-- 💬 Loan request system with acceptance flow
-- 📡 Real-time live tracking for accepted loans
-- 📊 Dynamic dashboards for borrowers and lenders
-- ⚙️ RESTful API built with Express.js
+### Loan Request Form
 
----
+![Loan Form](./screenshots/loan-form.png)  
+Submit loan request with calculated charges
 
-## 🛠️ Tech Stack
+### Live Tracking
 
-- **Frontend:** React, TypeScript, Tailwind CSS, Vite
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB with Mongoose
-- **Geolocation:** LocationIQ (Reverse Geocoding), Haversine logic
-- **Other Tools:** Axios, React Router, Lucide Icons
+![Live Map](./screenshots/live-tracking.png)  
+Track real-time location of borrower/lender
+
+> Make sure you place all screenshots in a `screenshots` folder in your root directory.
 
 ---
 
-## 📦 Installation and Setup
+## 🌟 Features
 
-1. **Clone the repository:**
+* 🔐 **User Authentication** – Register/login as borrower or lender
+* 📍 **Location-Based Matching** – Find nearest lenders using Haversine formula
+* 💰 **Loan Request Flow** – Borrowers send requests; lenders accept
+* 📡 **Live Location Tracking** – Ola/Rapido-style tracking post-acceptance
+* 📊 **Separate Dashboards** – For both borrowers and lenders
+* 💸 **Automatic Charges Calculation** – Processing fees auto-added
+* 📬 **Notifications** – Get notified when loan requests are accepted
+* ⚡ **Responsive UI** – Built with Tailwind CSS
+
+---
+
+## 🛠 Tech Stack
+
+### 🖥 Frontend
+
+* React + TypeScript
+* Vite
+* Tailwind CSS
+* Axios
+* React Router DOM
+
+### 🌐 Backend
+
+* Node.js
+* Express.js
+* MongoDB + Mongoose
+* Haversine formula for geo-distance
+* LocationIQ API for reverse geocoding
+
+---
+
+## 🚀 Getting Started
+
+### 📋 Prerequisites
+
+* Node.js (v14+)
+* MongoDB (local or Atlas)
+* LocationIQ API Key
+
+---
+
+### 📦 Installation
+
+1. **Clone the repository**
 
 ```bash
-git clone https://github.com/your-username/cashconnect.git
+git clone https://github.com/yourusername/cashconnect.git
 cd cashconnect
 ```
-Install frontend dependencies:
+Frontend Setup
 
 ```bash
 
 cd frontend
 npm install
+npm run dev
 ```
-Install backend dependencies:
+Backend Setup
 
 ```bash
 
-cd ../backend
+cd backend
 npm install
+node server.js
 ```
-Set up environment variables:
+Environment Variables
 
-Create a .env file in the backend/ directory with the following:
+Create .env file inside backend/:
 
 ```env
 
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-LOCATIONIQ_API_KEY=your_locationiq_api_key
+LOCATIONIQ_API_KEY=your_locationiq_key
+FRONTEND_URL=http://localhost:5173
 ```
-Run the backend server:
 
-```bash
+📱 Usage
+Borrower Flow
 
-cd backend
-npm run dev
+Sign up as a borrower
+
+Submit loan request (with amount, term, purpose)
+
+System auto-calculates processing charges
+
+View live updates when a lender accepts your request
+
+Lender Flow
+
+Sign up as a lender
+
+See loan requests nearby
+
+Accept any one request (first-come-first-serve logic)
+
+After accepting, access live location of borrower
+
+Live Map
+
+Integrated Leaflet map displays real-time tracking of borrower/lender
+
+📝 License
+This project is licensed under the MIT License – see the LICENSE file for details.
+
+
+👥 Author
+Thanuja Nanjappa – Developer & Maintainer
+
+🙏 Acknowledgments
+LocationIQ for reverse geocoding
+
+Open source contributors of Haversine and Leaflet.js
+
+MongoDB + Vite + Tailwind community
+
+📚 API Documentation
+📌 Create Loan Request
+```h
+
+POST /api/loans
+Content-Type: application/json
+
+{
+  "amount": 5000,
+  "term": "6 months",
+  "purpose": "Medical emergency",
+  "location": {
+    "latitude": 12.9716,
+    "longitude": 77.5946
+  }
+}
 ```
-Run the frontend app:
+Response:
 
-```bash
+```json
 
-cd frontend
-npm run dev
+{
+  "message": "Loan created successfully",
+  "loan": {
+    "_id": "...",
+    "finalAmount": 5250
+  }
+}
 ```
-Visit: http://localhost:5173 in your browser.
+📌 Get Nearby Lenders (for borrower)
+```h
 
-🧪 Sample Accounts (Optional for Testing)
-Role	Email	Password
-Borrower	thanujananjappa@example.com	12345678
-Lender	rinu@example.com	12345678
-
-📄 License
-This project is licensed under the MIT License.
-
-```vbnet
-
-MIT License
-
-Copyright (c) 2025 Thanuja
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the “Software”), to deal
-in the Software without restriction, including without limitation the rights  
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell      
-copies of the Software, and to permit persons to whom the Software is          
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in     
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN      
-THE SOFTWARE.
-🤝 Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+GET /api/loans/matches?userId=USER_ID
 ```
-📫 Contact
+Response:
 
-Created by Thanuja Nanjappa – feel free to reach out!
+```json
+
+[
+  {
+    "lenderId": "1234",
+    "distance": "2.4 km",
+    "phone": "XXXXXXXXXX"
+  }
+]
+```
+📌 Accept Loan Request (by lender)
+```h
+
+POST /api/loans/accept
+```
+Content-Type: application/json
+```json
+{
+  "loanId": "abc123",
+  "lenderId": "lender_user_id"
+}
+```
+📌 Get Live Tracking Info
+```h
+
+GET /api/loans/live-location?loanId=abc123
+```
+📎 Folder Structure
+```css
+
+cashconnect/
+├── frontend/
+│   └── src/
+│       └── components/
+│       └── pages/
+│       └── hooks/
+├── backend/
+│   └── controllers/
+│   └── models/
+│   └── routes/
+│   └── utils/
+└── screenshots/
+```
 
 
+
+Ask ChatGPT
