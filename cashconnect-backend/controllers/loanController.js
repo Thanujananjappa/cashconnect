@@ -42,6 +42,34 @@ exports.createLoan = async (req, res) => {
   }
 };
 
+// ================== ACCEPT LOAN REQUEST (MISSING BEFORE) ==================
+exports.acceptLoanRequest = async (req, res) => {
+  try {
+    const { loanId, lenderId } = req.body;
+
+    if (!loanId || !lenderId) {
+      return res.status(400).json({ success: false, error: 'Missing loanId or lenderId' });
+    }
+
+    const loan = await Loan.findById(loanId);
+    if (!loan) {
+      return res.status(404).json({ success: false, error: 'Loan not found' });
+    }
+
+    loan.lender = lenderId;
+    loan.status = 'accepted';
+
+    await loan.save();
+
+    const populatedLoan = await Loan.findById(loan._id).populate(['borrower', 'lender']);
+
+    res.status(200).json({ success: true, loan: populatedLoan });
+  } catch (err) {
+    console.error('❌ Error in acceptLoanRequest:', err);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
 // ================== GET NEARBY LENDERS ==================
 exports.getMatchedLoans = async (req, res) => {
   try {
