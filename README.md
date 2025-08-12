@@ -65,6 +65,7 @@ A real-time loan matchmaking platform that connects **borrowers** and **lenders*
 * Tailwind CSS
 * Axios
 * React Router DOM
+* leaflet
 
 ### 🌐 Backend
 
